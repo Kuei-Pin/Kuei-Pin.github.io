@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="许桂斌的博客">
-<meta property="og:url" content="https://kuei-pin.github.io/index.html">
+<meta name="description" content="NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步读写文件NSStream">
+<meta property="og:url" content="https://kuei-pin.github.io/2018/05/05/NSStream/index.html">
 <meta property="og:site_name" content="许桂斌的博客">
+<meta property="og:description" content="NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-05T07:32:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="许桂斌的博客">
+<meta name="twitter:title" content="异步读写文件NSStream">
+<meta name="twitter:description" content="NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://kuei-pin.github.io/"/>
+  <link rel="canonical" href="https://kuei-pin.github.io/2018/05/05/NSStream/"/>
 
 
 
 
 
-  <title>许桂斌的博客</title>
+  <title>异步读写文件NSStream | 许桂斌的博客</title>
   
 
 
@@ -150,8 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,9 +247,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -276,9 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/05/NSStream/" itemprop="url">异步读写文件NSStream</a></h1>
+          <h1 class="post-title" itemprop="name headline">异步读写文件NSStream</h1>
         
 
         <div class="post-meta">
@@ -303,6 +304,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/05/NSStream/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/05/05/NSStream/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -358,16 +369,15 @@
       
 
       
-        
-          <p>NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/05/NSStream/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。<br><a id="more"></a></p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>当我们从硬盘中读取文件到内存时，一般更多的是通过<code>NSData</code>来读取。在读取小文件时，直接使用NSData不会有什么影响，但是如果读取的文件大小比较大时，使用<code>NSData</code>直接读取文件，可能会阻塞当前进程，测试代码如下：<br><strong>NSData同步读取文件</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfFile:filePath];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\ndata length: %ld"</span>, data.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>输出</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">开始时间 ： <span class="number">1525486526.82</span></span><br><span class="line">结束时间 ： <span class="number">1525486530.22</span></span><br><span class="line">data length: <span class="number">212303699</span></span><br></pre></td></tr></table></figure></p>
+<p>在模拟器上读取200M的文件需要花费大概3秒的时间。</p>
+<p><strong>NSStream异步读取</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="keyword">self</span>.inputStream = [[<span class="built_in">NSInputStream</span> alloc] initWithFileAtPath:filePath];</span><br><span class="line">    [<span class="keyword">self</span>.inputStream scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop]</span><br><span class="line">                       forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line">    [<span class="keyword">self</span>.inputStream open];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>输出</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开始时间 ： <span class="number">1525486717.64</span></span><br><span class="line">结束时间 ： <span class="number">1525486717.64</span></span><br></pre></td></tr></table></figure></p>
+<p>必须使用代理，否则并不会进行读取。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html</a><br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1</a></p>
+
       
     </div>
     
@@ -379,171 +389,51 @@
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    许桂斌
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://kuei-pin.github.io/2018/05/05/NSStream/" title="异步读写文件NSStream">https://kuei-pin.github.io/2018/05/05/NSStream/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>温馨提示： </strong>
+    由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kuei-pin.github.io/2018/05/02/AFNetworking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="许桂斌">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="许桂斌的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/02/AFNetworking/" itemprop="url">读一读AFNetworking</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T20:28:45Z">
-                2018-05-01
-              </time>
+              <a href="/2018/05/02/AFNetworking/" rel="next" title="读一读AFNetworking">
+                <i class="fa fa-chevron-left"></i> 读一读AFNetworking
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/05/02/AFNetworking/" class="leancloud_visitors" data-flag-title="读一读AFNetworking">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2,096
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>AFNetworking是iOS开发中最常用的第三方开源库之一，它主要用于进行网络请求。AFNetworking主要是对HTTP协议和iOS网络相关库的封装，读一读源码可以加深对HTTP协议和iOS网络编程的理解。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/02/AFNetworking/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -553,186 +443,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kuei-pin.github.io/2018/04/28/KVO/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="许桂斌">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="许桂斌的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/28/KVO/" itemprop="url">我理解的KVO</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-27T16:21:11Z">
-                2018-04-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cocoa/" itemprop="url" rel="index">
-                    <span itemprop="name">Cocoa</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/04/28/KVO/" class="leancloud_visitors" data-flag-title="我理解的KVO">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4,083
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>KVO（Key-Value-Obersver）是iOS对于对象属性的一种源于<a href="https://zh.wikipedia.org/wiki/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">观察者模式</a>的设计。使用KVO可以使我们更方便地监听对象的属性的变化，再根据属性的变化去进行想要的操作。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/28/KVO/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -740,6 +455,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -760,8 +486,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -812,6 +547,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -952,6 +703,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -998,6 +753,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'Kuei-Pin',
+            repo: 'https://github.com/Kuei-Pin/blog-comments.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e8c9abc6901b421808690eb1e3572708f8fd52c',
+            
+                client_id: 'ba95ef24632c5a4a4b28'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
