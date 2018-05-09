@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,6 +13,13 @@
 <meta name="theme-color" content="#222">
 
 
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -68,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="xuguibin, ios" />
 
 
 
@@ -86,7 +93,7 @@
 <meta property="og:site_name" content="许桂斌的博客">
 <meta property="og:description" content="AFNetworking是iOS开发中最常用的第三方开源库之一，它主要用于进行网络请求。AFNetworking主要是对HTTP协议和iOS网络相关库的封装，读一读源码可以加深对HTTP协议和iOS网络编程的理解。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-08T08:20:33.000Z">
+<meta property="og:updated_time" content="2018-05-09T03:24:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读一读AFNetworking">
 <meta name="twitter:description" content="AFNetworking是iOS开发中最常用的第三方开源库之一，它主要用于进行网络请求。AFNetworking主要是对HTTP协议和iOS网络相关库的封装，读一读源码可以加深对HTTP协议和iOS网络编程的理解。">
@@ -97,9 +104,9 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Mist',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -170,7 +177,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description"></h1>
       
   </div>
 
@@ -200,32 +207,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-schedule">
-          <a href="/schedule/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
-            
-            日程表
           </a>
         </li>
       
@@ -237,7 +224,16 @@
   
 </nav>
 
-
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
 
  </div>
     </header>
@@ -267,7 +263,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许桂斌">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -279,7 +275,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">读一读AFNetworking</h1>
+          <h2 class="post-title" itemprop="name headline">读一读AFNetworking</h2>
         
 
         <div class="post-meta">
@@ -344,7 +340,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,228
+                  2,232
                 </span>
               
 
@@ -379,120 +375,26 @@
 <li>处理通讯的会话模块：NSURLSession<br>其中NSURLSession是我们最常使用的模块，也是综合模块，它引用了其他的几个模块，而其他几个模块都是独立的模块，所以我们的学习就先从这些单独的模块开始。</li>
 </ul>
 <h1 id="Serialization模块"><a href="#Serialization模块" class="headerlink" title="Serialization模块"></a>Serialization模块</h1><p>Serialization模块包括请求序列化<code>AFURLRequestSerialization</code>和响应序列化<code>AFURLResponseSerialization</code>，它们主要功能都是对HTTP请求头的封装和解析。</p>
-<h2 id="AFURLRequestSerialization"><a href="#AFURLRequestSerialization" class="headerlink" title="AFURLRequestSerialization"></a>AFURLRequestSerialization</h2><h3 id="AFURLRequestSerialization-h"><a href="#AFURLRequestSerialization-h" class="headerlink" title="AFURLRequestSerialization.h"></a>AFURLRequestSerialization.h</h3><p>先声明了一个协议<code>AFURLRequestSerialization</code>继承了<code>NSSecureCoding</code>和<code>NSCopying</code>来保证所有实现这个序列化协议的序列化器类都有<a href="http://nshipster.cn/nssecurecoding/" target="_blank" rel="noopener">安全编码</a>和<a href="https://developer.apple.com/documentation/foundation/nscopying" target="_blank" rel="noopener">复制</a>的能力。协议也定义了序列化的规范方法。（虽然目前只有一个类实现了协议，感觉没啥必要..但这是一种规范，有利于扩展。）</p>
-<pre><code class="objc"><span class="comment">/**</span>
-<span class="comment">    AFURLRequestSerialization协议可以被一个编码特定http请求的对象实现。请求序列化器（Request serializer）可以编码查询语句、HTTP请求体，如果必须的话，可以自行设置合适的HTTP请求体内容（如：Agent:iOS）。</span>
-<span class="comment">    例如，一个JSON请求序列化器会把请求体Content-Type设置为application/json。</span>
-<span class="comment">*/</span>
-<span class="class"><span class="keyword">@protocol</span> <span class="title">AFURLRequestSerialization</span> &lt;<span class="title">NSObject</span>, <span class="title">NSSecureCoding</span>, <span class="title">NSCopying</span>&gt;</span>
-
-<span class="comment">/**</span>
-<span class="comment">    返回一个使用了指定参数编码的请求的拷贝。</span>
-<span class="comment">*/</span>
-- (<span class="keyword">nullable</span> <span class="built_in">NSURLRequest</span> *)requestBySerializingRequest:(<span class="built_in">NSURLRequest</span> *)request
-                               withParameters:(<span class="keyword">nullable</span> <span class="keyword">id</span>)parameters
-                                        error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error <span class="built_in">NS_SWIFT_NOTHROW</span>;
-<span class="keyword">@end</span>
-</code></pre>
-<p>HTTP序列化器类<code>AFHTTPRequestSerializer</code>,实现了<code>AFURLRequestSerialization</code>协议，并参考了<code>NSMutableURLRequest</code>类声明了很多请求设置相关属性。<br><strong>AFHTTPRequestSerializer和其主要公开属性</strong></p>
-<pre><code class="objc"><span class="comment">/**</span>
-<span class="comment">    AFHTTPRequestSerializer实现了AFURLRequestSerialization协议，为查询语句、URL表单编码参数的序列化提供一个具体的实现和默认的请求头，以及状态码和内容类型的校验。</span>
-<span class="comment">    所有的request和response都被鼓励去继承AFHTTPRequestSerializer类，以确保默认方法和属性的一致性。</span>
-<span class="comment">*/</span>
-<span class="class"><span class="keyword">@interface</span> <span class="title">AFHTTPRequestSerializer</span> : <span class="title">NSObject</span> &lt;<span class="title">AFURLRequestSerialization</span>&gt;</span>
-
-<span class="comment">/**</span>
-<span class="comment">    字符串编码方式，默认为NSUTF8StringEncoding</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSStringEncoding</span> stringEncoding;
-<span class="comment">/**</span>
-<span class="comment">    缓存策略。默认为NSURLRequestUseProtocolCachePolicy</span>
-<span class="comment">    参考NSMutableURLRequest -setCachePolicy:</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSURLRequestCachePolicy</span> cachePolicy;
-<span class="comment">/**</span>
-<span class="comment">    是否用cookie来处理创建的请求。默认为YES</span>
-<span class="comment">    参考NSMutableURLRequest -setHTTPShouldHandleCookies</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> HTTPShouldHandleCookies;
-<span class="comment">/**</span>
-<span class="comment">    创建的请求在收到上个传输（transmission）响应之前是否继续发送数据。默认为NO(即等待上次传输完成后再请求)</span>
-<span class="comment">    参考NSMutableURLRequest -setHTTPShouldUsePipelining:</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> HTTPShouldUsePipelining;
-<span class="comment">/**</span>
-<span class="comment">    请求的网络服务类型。</span>
-<span class="comment">    这个服务类型向整个网络传输层次提供了一个关于该请求目的的提示。（The service type is used to provide the networking layers a hint of the purpose of the request.）</span>
-<span class="comment">    默认为NSURLNetworkServiceTypeDefault</span>
-<span class="comment">    参考NSMutableURLRequest -setNetworkServiceType:</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSURLRequestNetworkServiceType</span> networkServiceType;
-<span class="comment">/**</span>
-<span class="comment">    请求的超时间隔，单位秒。默认为60秒</span>
-<span class="comment">    参考NSMutableURLRequest -setTimeoutInterval:</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSTimeInterval</span> timeoutInterval;
-<span class="comment">/**</span>
-<span class="comment">    序列请求的默认请求头。默认值包括</span>
-<span class="comment">    'Accept-Language’  内容为 'NSLocale +preferredLanguages’ 方法获取的语音</span>
-<span class="comment">    'User-Agent’  内容为各种bundle的标志已经系统信息</span>
-<span class="comment">    可以使用'setValue:forHTTPHeaderField:’方法添加或删除请求头</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSDictionary</span> &lt;<span class="built_in">NSString</span> *, <span class="built_in">NSString</span> *&gt; *HTTPRequestHeaders;
-
-<span class="comment">/**</span>
-<span class="comment">    哪些HTTP请求方法会将参数编码成查询字符串（如:name=xgb&amp;gender=1）。默认为GET, HEAD和DELETE。</span>
-<span class="comment">*/</span>
-<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSSet</span> &lt;<span class="built_in">NSString</span> *&gt; *HTTPMethodsEncodingParametersInURI;
-
-<span class="keyword">@end</span>
-</code></pre>
-<p><code>stringEncoding</code>一般服务器都是utf-8格式，没必要用到<a href="https://developer.apple.com/documentation/foundation/foundation_enumerations/1497293-anonymous" target="_blank" rel="noopener">其他</a>。<br><code>cachePolicy</code>缓存策略，<a href="https://developer.apple.com/documentation/foundation/nsurlrequestcachepolicy?language=objc" target="_blank" rel="noopener">苹果</a>主要定义了四种可供选择的缓存策略：</p>
-<pre><code class="objc"><span class="comment">/**</span>
-<span class="comment">    NSURLRequestUseProtocolCachePolicy是默认的缓存策略，它使用当前URL的协议中预置的缓存策略，无论这个协议是http，还是说你自己定义协议。</span>
-<span class="comment">    对于我们常见的http协议来说，这个策略根据请求的头来执行缓存策略。服务器可以在返回的响应头中加入Expires策略或者Cache-Control策略来告诉客户端应该执行的缓存行为，同时配合Last-Modified等头来控制刷新的时机。关于详细的web缓存处理https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn</span>
-<span class="comment">*/</span>
-<span class="built_in">NSURLRequestUseProtocolCachePolicy</span>
-<span class="comment">/**</span>
-<span class="comment">    不使用缓存，相当于请求头的no-store，在进行包含个人隐私数据或银行业务数据等敏感信息的请求时可以使用。</span>
-<span class="comment">*/</span>
-<span class="built_in">NSURLRequestReloadIgnoringCacheData</span>
-<span class="comment">/**</span>
-<span class="comment">    NSURLRequestReturnCacheDataElseLoad 这个策略比较有趣，它会一直偿试读取缓存数据，直到无法没有缓存数据的时候，才会去请求网络。这个策略有一个重大的缺陷导致它根本无法被使用，即它根本没有对缓存的刷新时机进行控制，如果你要去使用它，那么需要额外的进行对缓存过期进行控制。</span>
-<span class="comment">*/</span>
-<span class="built_in">NSURLRequestReturnCacheDataElseLoad</span>
-<span class="comment">/**</span>
-<span class="comment">    只读缓存并且即时缓存不存在都不去请求</span>
-<span class="comment">*/</span>
-<span class="built_in">NSURLRequestReturnCacheDataDontLoad</span>
-</code></pre>
+<h2 id="AFURLRequestSerialization"><a href="#AFURLRequestSerialization" class="headerlink" title="AFURLRequestSerialization"></a>AFURLRequestSerialization</h2><h3 id="AFURLRequestSerialization-h"><a href="#AFURLRequestSerialization-h" class="headerlink" title="AFURLRequestSerialization.h"></a>AFURLRequestSerialization.h</h3><p>先声明了一个协议<code>AFURLRequestSerialization</code>继承了<code>NSSecureCoding</code>和<code>NSCopying</code>来保证所有实现这个序列化协议的序列化器类都有<a href="http://nshipster.cn/nssecurecoding/" target="_blank" rel="noopener">安全编码</a>和<a href="https://developer.apple.com/documentation/foundation/nscopying" target="_blank" rel="noopener">复制</a>的能力。协议也定义了序列化的规范方法。（虽然目前只有一个类实现了协议，感觉没啥必要..但这是一种规范，有利于扩展。）<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></div><div class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    AFURLRequestSerialization协议可以被一个编码特定http请求的对象实现。请求序列化器（Request serializer）可以编码查询语句、HTTP请求体，如果必须的话，可以自行设置合适的HTTP请求体内容（如：Agent:iOS）。</span></div><div class="line"><span class="comment">    例如，一个JSON请求序列化器会把请求体Content-Type设置为application/json。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">AFURLRequestSerialization</span> &lt;<span class="title">NSObject</span>, <span class="title">NSSecureCoding</span>, <span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    返回一个使用了指定参数编码的请求的拷贝。</span></div><div class="line"><span class="comment">*/</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">NSURLRequest</span> *)requestBySerializingRequest:(<span class="built_in">NSURLRequest</span> *)request</div><div class="line">                               withParameters:(<span class="keyword">nullable</span> <span class="keyword">id</span>)parameters</div><div class="line">                                        error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error <span class="built_in">NS_SWIFT_NOTHROW</span>;</div><div class="line"><span class="keyword">@end</span></div></pre></div></div></figure></p>
+<p>HTTP序列化器类<code>AFHTTPRequestSerializer</code>,实现了<code>AFURLRequestSerialization</code>协议，并参考了<code>NSMutableURLRequest</code>类声明了很多请求设置相关属性。<br><strong>AFHTTPRequestSerializer和其主要公开属性</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></div><div class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    AFHTTPRequestSerializer实现了AFURLRequestSerialization协议，为查询语句、URL表单编码参数的序列化提供一个具体的实现和默认的请求头，以及状态码和内容类型的校验。</span></div><div class="line"><span class="comment">    所有的request和response都被鼓励去继承AFHTTPRequestSerializer类，以确保默认方法和属性的一致性。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">AFHTTPRequestSerializer</span> : <span class="title">NSObject</span> &lt;<span class="title">AFURLRequestSerialization</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    字符串编码方式，默认为NSUTF8StringEncoding</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSStringEncoding</span> stringEncoding;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    缓存策略。默认为NSURLRequestUseProtocolCachePolicy</span></div><div class="line"><span class="comment">    参考NSMutableURLRequest -setCachePolicy:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSURLRequestCachePolicy</span> cachePolicy;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    是否用cookie来处理创建的请求。默认为YES</span></div><div class="line"><span class="comment">    参考NSMutableURLRequest -setHTTPShouldHandleCookies</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> HTTPShouldHandleCookies;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    创建的请求在收到上个传输（transmission）响应之前是否继续发送数据。默认为NO(即等待上次传输完成后再请求)</span></div><div class="line"><span class="comment">    参考NSMutableURLRequest -setHTTPShouldUsePipelining:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> HTTPShouldUsePipelining;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    请求的网络服务类型。</span></div><div class="line"><span class="comment">    这个服务类型向整个网络传输层次提供了一个关于该请求目的的提示。（The service type is used to provide the networking layers a hint of the purpose of the request.）</span></div><div class="line"><span class="comment">    默认为NSURLNetworkServiceTypeDefault</span></div><div class="line"><span class="comment">    参考NSMutableURLRequest -setNetworkServiceType:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSURLRequestNetworkServiceType</span> networkServiceType;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    请求的超时间隔，单位秒。默认为60秒</span></div><div class="line"><span class="comment">    参考NSMutableURLRequest -setTimeoutInterval:</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSTimeInterval</span> timeoutInterval;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    序列请求的默认请求头。默认值包括</span></div><div class="line"><span class="comment">    'Accept-Language’  内容为 'NSLocale +preferredLanguages’ 方法获取的语音</span></div><div class="line"><span class="comment">    'User-Agent’  内容为各种bundle的标志已经系统信息</span></div><div class="line"><span class="comment">    可以使用'setValue:forHTTPHeaderField:’方法添加或删除请求头</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSDictionary</span> &lt;<span class="built_in">NSString</span> *, <span class="built_in">NSString</span> *&gt; *HTTPRequestHeaders;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">	哪些HTTP请求方法会将参数编码成查询字符串（如:name=xgb&amp;gender=1）。默认为GET, HEAD和DELETE。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSSet</span> &lt;<span class="built_in">NSString</span> *&gt; *HTTPMethodsEncodingParametersInURI;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></div></div></figure></p>
+<p><code>stringEncoding</code>一般服务器都是utf-8格式，没必要用到<a href="https://developer.apple.com/documentation/foundation/foundation_enumerations/1497293-anonymous" target="_blank" rel="noopener">其他</a>。<br><code>cachePolicy</code>缓存策略，<a href="https://developer.apple.com/documentation/foundation/nsurlrequestcachepolicy?language=objc" target="_blank" rel="noopener">苹果</a>主要定义了四种可供选择的缓存策略：<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></div><div class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">	NSURLRequestUseProtocolCachePolicy是默认的缓存策略，它使用当前URL的协议中预置的缓存策略，无论这个协议是http，还是说你自己定义协议。</span></div><div class="line"><span class="comment">	对于我们常见的http协议来说，这个策略根据请求的头来执行缓存策略。服务器可以在返回的响应头中加入Expires策略或者Cache-Control策略来告诉客户端应该执行的缓存行为，同时配合Last-Modified等头来控制刷新的时机。关于详细的web缓存处理https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="built_in">NSURLRequestUseProtocolCachePolicy</span></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">	不使用缓存，相当于请求头的no-store，在进行包含个人隐私数据或银行业务数据等敏感信息的请求时可以使用。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="built_in">NSURLRequestReloadIgnoringCacheData</span></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">	NSURLRequestReturnCacheDataElseLoad 这个策略比较有趣，它会一直偿试读取缓存数据，直到无法没有缓存数据的时候，才会去请求网络。这个策略有一个重大的缺陷导致它根本无法被使用，即它根本没有对缓存的刷新时机进行控制，如果你要去使用它，那么需要额外的进行对缓存过期进行控制。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="built_in">NSURLRequestReturnCacheDataElseLoad</span></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">	只读缓存并且即时缓存不存在都不去请求</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="built_in">NSURLRequestReturnCacheDataDontLoad</span></div></pre></div></div></figure></p>
 <p><code>HTTPShouldHandleCookies</code>、<code>HTTPShouldUsePipelining</code>这两个属性一般不需要修改，使用默认即可。<br><code>networkServiceType</code>用于设置这个请求的系统处理优先级，这个属性会影响系统对网络请求的唤醒速度，例如FaceTime使用了VoIP协议就需要设置为NSURLNetworkServiceTypeVoIP来使得在后台接收到数据时也能快速唤醒应用，对于我们而言一般情况下也不需要用到。<br><code>timeoutInterval</code>请求超时时间。<br><code>HTTPRequestHeaders</code>其他请求头设置。</p>
 <h3 id="AFURLRequestSerialization-m"><a href="#AFURLRequestSerialization-m" class="headerlink" title="AFURLRequestSerialization.m"></a>AFURLRequestSerialization.m</h3><p><code>AFURLRequestSerialization.m</code>定义的一些主要方法：</p>
 <ul>
 <li><code>AFPercentEscapedStringFromString</code>用于将字符串转化成符合标准的<a href="https://zh.wikipedia.org/wiki/%E7%99%BE%E5%88%86%E5%8F%B7%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">URL编码字符串</a>。</li>
 <li><p><code>AFQueryStringFromParameters</code>用于将字典转换成URL查询字符串。转换格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">字典 &#123;name:xgb, from:gd, machine:[iphone, mac], pet:&#123;a:cat, b:dog&#125;&#125;</span><br><span class="line">转换为 name=xgb&amp;from=gd&amp;machine[]=iphone&amp;machine[]=mac&amp;pet[a]=cat&amp;pet[b]=dog</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></div><div class="code"><pre><div class="line">字典 &#123;name:xgb, from:gd, machine:[iphone, mac], pet:&#123;a:cat, b:dog&#125;&#125;</div><div class="line">转换为 name=xgb&amp;from=gd&amp;machine[]=iphone&amp;machine[]=mac&amp;pet[a]=cat&amp;pet[b]=dog</div></pre></div></div></figure>
 </li>
 <li><p><code>AFHTTPRequestSerializerObservedKeyPaths</code>定义可以需要被观察的属性（这些属性为公开的属性，可能被用户修改），包括<code>cachePolicy</code>、<code>HTTPShouldHandleCookies</code>、<code>HTTPShouldUsePipelining</code>、<code>networkServiceType</code>和<code>timeoutInterval</code>。</p>
 </li>
 </ul>
-<p><code>AFHTTPRequestSerializer</code>扩展定义了一些私有属性，如下：<br><strong>主要的私有属性</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">AFHTTPRequestSerializer</span> ()</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    保存用户修改过的属性，包括AFHTTPRequestSerializerObservedKeyPaths包含的属性。</span></span><br><span class="line"><span class="comment">    当用户修改这些属性值时记录起来，创建Request时使用，没修改的使用默认值。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *mutableObservedChangedKeyPaths;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    真正存储Header的属性。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableDictionary</span> *mutableHTTPRequestHeaders;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    用一个串行线程来统一处理Header的修改，避免多线程造成的线程安全问题。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> requestHeaderModificationQueue;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    目前还没啥用的属性。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) AFHTTPRequestQueryStringSerializationStyle queryStringSerializationStyle;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    用于自定义查询字符串的拼接。</span></span><br><span class="line"><span class="comment">    因为AFURLRequestSerialization协议定义的方法-requestBySerializingRequest:withParameters:error:传入的parameters是以字典的形式传入，所以需要将字典拼接成查询字符串，默认是使用AFQueryStringFromParameters方法拼接。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) AFQueryStringSerializationBlock queryStringSerialization;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p><code>AFHTTPRequestSerializer</code>扩展定义了一些私有属性，如下：<br><strong>主要的私有属性</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></div><div class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">AFHTTPRequestSerializer</span> ()</span></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    保存用户修改过的属性，包括AFHTTPRequestSerializerObservedKeyPaths包含的属性。</span></div><div class="line"><span class="comment">    当用户修改这些属性值时记录起来，创建Request时使用，没修改的使用默认值。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *mutableObservedChangedKeyPaths;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    真正存储Header的属性。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableDictionary</span> *mutableHTTPRequestHeaders;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    用一个串行线程来统一处理Header的修改，避免多线程造成的线程安全问题。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> requestHeaderModificationQueue;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    目前还没啥用的属性。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) AFHTTPRequestQueryStringSerializationStyle queryStringSerializationStyle;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    用于自定义查询字符串的拼接。</span></div><div class="line"><span class="comment">    因为AFURLRequestSerialization协议定义的方法-requestBySerializingRequest:withParameters:error:传入的parameters是以字典的形式传入，所以需要将字典拼接成查询字符串，默认是使用AFQueryStringFromParameters方法拼接。</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readwrite</span>, <span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) AFQueryStringSerializationBlock queryStringSerialization;</div><div class="line"><span class="keyword">@end</span></div></pre></div></div></figure></p>
 <p>通过对<code>AFHTTPRequestSerializer</code>属性了解，我们就能知道<code>AFHTTPRequestSerializer</code>的功能。在使用<code>AFHTTPRequestSerializer</code>的主要方法<code>-requestWithMethod:URLString:parameters:error</code>创建请求时，Serializer会将修改过的NSURLRequest的主要属性（如：cachePolicy）添加到新的请求，将参数编成符合URL编码的查询语句，将修改的HTTPHeader写入。</p>
-<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p>在了解这部分代码之前，需要先了解一下HTTP协议关于传输multipart数据的相关约定。根据<a href="https://www.ietf.org/rfc/rfc1867.txt" target="_blank" rel="noopener">rfc1867</a>规定，传输multipart可以使用以下例子的格式：<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Content-type</span>: multipart/form-data, boundary=AaB03x</span><br><span class="line"></span><br><span class="line">--AaB03x</span><br><span class="line"><span class="attribute">content-disposition</span>: form-data; name="userName"</span><br><span class="line"></span><br><span class="line">Joe Blow</span><br><span class="line"></span><br><span class="line">--AaB03x</span><br><span class="line"><span class="attribute">content-disposition</span>: form-data; name="pics[]"; filename="pic1.png"</span><br><span class="line"><span class="attribute">Content-Type</span>: image/png</span><br><span class="line"></span><br><span class="line"> ... contents of pic1.png ...</span><br><span class="line"> </span><br><span class="line">--AaB03x</span><br><span class="line"><span class="attribute">Content-disposition</span>: form-data; name="pics[]"; filename="pic2.png"</span><br><span class="line"><span class="attribute">Content-type</span>: image/png</span><br><span class="line"></span><br><span class="line">... contents of pic2.png ...</span><br><span class="line"></span><br><span class="line">--AaB03x--</span><br></pre></td></tr></table></figure></p>
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p>在了解这部分代码之前，需要先了解一下HTTP协议关于传输multipart数据的相关约定。根据<a href="https://www.ietf.org/rfc/rfc1867.txt" target="_blank" rel="noopener">rfc1867</a>规定，传输multipart可以使用以下例子的格式：<br><figure class="highlight"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></div><div class="code"><pre><div class="line"><span class="attribute">Content-type</span>: multipart/form-data, boundary=AaB03x</div><div class="line"></div><div class="line">--AaB03x</div><div class="line"><span class="attribute">content-disposition</span>: form-data; name="userName"</div><div class="line"></div><div class="line">Joe Blow</div><div class="line"></div><div class="line">--AaB03x</div><div class="line"><span class="attribute">content-disposition</span>: form-data; name="pics[]"; filename="pic1.png"</div><div class="line"><span class="attribute">Content-Type</span>: image/png</div><div class="line"></div><div class="line"> ... contents of pic1.png ...</div><div class="line"> </div><div class="line">--AaB03x</div><div class="line"><span class="attribute">Content-disposition</span>: form-data; name="pics[]"; filename="pic2.png"</div><div class="line"><span class="attribute">Content-type</span>: image/png</div><div class="line"></div><div class="line">... contents of pic2.png ...</div><div class="line"></div><div class="line">--AaB03x--</div></pre></div></div></figure></p>
 <p>定义一个边界boundary，每个上传的各个部分（Part）用<code>--boundary</code>来分割，再以<code>--boundary--</code>为结尾。name为服务器端获取文件时使用的参数，filename为本地的文件名。</p>
-<p><code>AFHTTPRequestSerializer</code>提供了上传文件的支持。AFNetworking主要是通过流（Stream）的方式来上传文件，因此<code>AFHTTPRequestSerializer</code>提供了最基本的流处理方法。<br><code>AFHTTPRequestSerializer</code>使用<code>AFMultipartFormData</code>协议来定义用户传入需要上传的文件或者数据的方法，然后通过一个实现了该协议的类来管理文件的上传。通过以下方法来生成一个包含文件流的Request：<br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    根据指定请求方法、URL和参数以及Block构造的multipart/form-data类型的HTTP body，返回一个NSMutableURLRequest对象。</span></span><br><span class="line"><span class="comment">    请求的多部分（Multipart）自动以流（stream）的形式从硬盘或者内存中读取数据到HTTP body。</span></span><br><span class="line"><span class="comment">    这导致生成的NSMutableURLRequest对象有一个HTTPBodyStream属性，所以不要再设置HTTPBodyStream或者HTTPBody给这个对象，以避免覆盖掉流数据。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">- (<span class="built_in">NSMutableURLRequest</span> *)multipartFormRequestWithMethod:(<span class="built_in">NSString</span> *)method</span><br><span class="line">                                              URLString:(<span class="built_in">NSString</span> *)URLString</span><br><span class="line">                                             parameters:(<span class="keyword">nullable</span> <span class="built_in">NSDictionary</span> &lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *)parameters</span><br><span class="line">                              constructingBodyWithBlock:(<span class="keyword">nullable</span> <span class="keyword">void</span> (^)(<span class="keyword">id</span> &lt;AFMultipartFormData&gt; formData))block</span><br><span class="line">                                                  error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error;</span><br></pre></td></tr></table></figure></p>
+<p><code>AFHTTPRequestSerializer</code>提供了上传文件的支持。AFNetworking主要是通过流（Stream）的方式来上传文件，因此<code>AFHTTPRequestSerializer</code>提供了最基本的流处理方法。<br><code>AFHTTPRequestSerializer</code>使用<code>AFMultipartFormData</code>协议来定义用户传入需要上传的文件或者数据的方法，然后通过一个实现了该协议的类来管理文件的上传。通过以下方法来生成一个包含文件流的Request：<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></div><div class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    根据指定请求方法、URL和参数以及Block构造的multipart/form-data类型的HTTP body，返回一个NSMutableURLRequest对象。</span></div><div class="line"><span class="comment">    请求的多部分（Multipart）自动以流（stream）的形式从硬盘或者内存中读取数据到HTTP body。</span></div><div class="line"><span class="comment">    这导致生成的NSMutableURLRequest对象有一个HTTPBodyStream属性，所以不要再设置HTTPBodyStream或者HTTPBody给这个对象，以避免覆盖掉流数据。</span></div><div class="line"><span class="comment">*/</span></div><div class="line">- (<span class="built_in">NSMutableURLRequest</span> *)multipartFormRequestWithMethod:(<span class="built_in">NSString</span> *)method</div><div class="line">                                              URLString:(<span class="built_in">NSString</span> *)URLString</div><div class="line">                                             parameters:(<span class="keyword">nullable</span> <span class="built_in">NSDictionary</span> &lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *)parameters</div><div class="line">                              constructingBodyWithBlock:(<span class="keyword">nullable</span> <span class="keyword">void</span> (^)(<span class="keyword">id</span> &lt;AFMultipartFormData&gt; formData))block</div><div class="line">                                                  error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error;</div></pre></div></div></figure></p>
 <p><code>AFStreamingMultipartFormData</code>就是实现了<code>AFMultipartFormData</code>协议用来上传文件的类。</p>
-<pre><code class="objc"><span class="comment">//根据文件扩展名返回相应的MIME-TYPE</span>
-<span class="keyword">static</span> <span class="keyword">inline</span> <span class="built_in">NSString</span> * AFContentTypeForPathExtension(<span class="built_in">NSString</span> *extension) {
-    <span class="built_in">NSString</span> *UTI = (__bridge_transfer <span class="built_in">NSString</span> *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge <span class="built_in">CFStringRef</span>)extension, <span class="literal">NULL</span>);
-    <span class="built_in">NSString</span> *contentType = (__bridge_transfer <span class="built_in">NSString</span> *)UTTypeCopyPreferredTagWithClass((__bridge <span class="built_in">CFStringRef</span>)UTI, kUTTagClassMIMEType);
-    <span class="keyword">if</span> (!contentType) {
-        <span class="keyword">return</span> <span class="string">@"application/octet-stream"</span>;
-    } <span class="keyword">else</span> {
-        <span class="keyword">return</span> contentType;
-    }
-}
-</code></pre>
+<figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></div><div class="code"><pre><div class="line"><span class="comment">//根据文件扩展名返回相应的MIME-TYPE</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="built_in">NSString</span> * AFContentTypeForPathExtension(<span class="built_in">NSString</span> *extension) &#123;</div><div class="line">    <span class="built_in">NSString</span> *UTI = (__bridge_transfer <span class="built_in">NSString</span> *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge <span class="built_in">CFStringRef</span>)extension, <span class="literal">NULL</span>);</div><div class="line">    <span class="built_in">NSString</span> *contentType = (__bridge_transfer <span class="built_in">NSString</span> *)UTTypeCopyPreferredTagWithClass((__bridge <span class="built_in">CFStringRef</span>)UTI, kUTTagClassMIMEType);</div><div class="line">    <span class="keyword">if</span> (!contentType) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">@"application/octet-stream"</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> contentType;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></div></div></figure>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://segmentfault.com/a/1190000005833523" target="_blank" rel="noopener">https://segmentfault.com/a/1190000005833523</a></p>
 
       
@@ -503,9 +405,7 @@
 
     
 
-    
-
-    
+     
       <div>
         <ul class="post-copyright">
   <li class="post-copyright-author">
@@ -514,15 +414,20 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://kuei-pin.github.io/2018/05/02/AFNetworking/" title="读一读AFNetworking">https://kuei-pin.github.io/2018/05/02/AFNetworking/</a>
+      <a href="https://https://kuei-pin.github.io/2018/05/02/AFNetworking/" title="读一读AFNetworking">https://https://kuei-pin.github.io/2018/05/02/AFNetworking/</a>
   </li>
   <li class="post-copyright-license">
     <strong>温馨提示： </strong>
-    由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。
+    <span class="tip">由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。</span>
   </li>
 </ul>
 
       </div>
+    
+
+
+    
+
     
 
     <footer class="post-footer">
@@ -561,6 +466,9 @@
   
   
   
+    
+
+
   </article>
 
 
@@ -608,64 +516,70 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          <li class="sidebar-nav-overview" data-target="site-overview">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">许桂斌</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
 
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">分类</span>
-                
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
+            <canvas id='sidebar-author'></canvas>
+            <a href="/"  class="site-author-image" rel="start" style="border: none;" title="许桂斌">
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="许桂斌" />
+            </a>
+            <p class="site-author-name" itemprop="name">许桂斌</p>
+            <p class="site-description motion-element" itemprop="description"></p>
         </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <!-- <a href="/archives/ || archive"> -->
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories"> 
+              <!--  -->
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              <!--  -->
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <div id="sidebarClock" class="customFlipClock" style="height: 46px;width: 100%; ">TwentyFourHourClock</div>
+
+
       </section>
 
       
@@ -712,11 +626,7 @@
 
 
 
-  <span class="post-meta-divider">|</span>
 
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -809,6 +719,8 @@
 
   <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
+  <script type="text/javascript" src="/js/src/function.js?v=5.1.4"></script>
+
   <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
@@ -816,11 +728,8 @@
   
   
 
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
   
@@ -836,6 +745,21 @@
 
 
 
+  <script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/lib/flipclock/flipclock.min.js"></script>	
+<script type="text/javascript" src="/js/src/customeFlipClock.js"></script>	
+<script type="text/javascript" src="/js/src/codescrollbar.js"></script>	
+<script type="text/javascript" src="/lib/tag3dCloud/tag3dCloud.min.js"> </script>
+<script type="text/javascript" src="/lib/wobblewindow/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>	
+<script >
+	$(document).ready(
+	function()
+		{			
+			
+		}
+	);	
+</script>
   
 
 
@@ -1024,6 +948,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
   

@@ -54,22 +54,22 @@ $(document).ready(function () {
   var sidebarToggleLine1st = new SidebarToggleLine({
     el: '.sidebar-toggle-line-first',
     status: {
-      arrow: {width: '50%', rotateZ: '-45deg', top: '2px'},
-      close: {width: '100%', rotateZ: '-45deg', top: '5px'}
+      arrow: {width: '50%', rotateZ: '45deg', top: '2px', left:'50%'},
+      close: {width: '100%', rotateZ: '-45deg', top: '5px', left: '0px'}
     }
   });
   var sidebarToggleLine2nd = new SidebarToggleLine({
     el: '.sidebar-toggle-line-middle',
     status: {
-      arrow: {width: '90%'},
-      close: {opacity: 0}
+      arrow: {width: '90%', left: '2px'},
+      close: {opacity: 0, left: '0px'}
     }
   });
   var sidebarToggleLine3rd = new SidebarToggleLine({
     el: '.sidebar-toggle-line-last',
     status: {
-      arrow: {width: '50%', rotateZ: '45deg', top: '-2px'},
-      close: {width: '100%', rotateZ: '45deg', top: '-5px'}
+      arrow: {width: '50%', rotateZ: '-45deg', top: '-2px', left: '50%'},
+      close: {width: '100%', rotateZ: '45deg', top: '-5px', left: '0px'}
     }
   });
 
@@ -98,7 +98,8 @@ $(document).ready(function () {
       $(document)
         .on('sidebar.isShowing', function () {
           NexT.utils.isDesktop() && $('body').velocity('stop').velocity(
-            {paddingRight: SIDEBAR_WIDTH},
+            //{paddingRight: SIDEBAR_WIDTH},
+            {paddingLeft: SIDEBAR_WIDTH},
             SIDEBAR_DISPLAY_DURATION
           );
         })
@@ -164,7 +165,8 @@ $(document).ready(function () {
       this.sidebarEl.trigger('sidebar.isShowing');
     },
     hideSidebar: function () {
-      NexT.utils.isDesktop() && $('body').velocity('stop').velocity({paddingRight: 0});
+      //NexT.utils.isDesktop() && $('body').velocity('stop').velocity({paddingRight: 0});
+      NexT.utils.isDesktop() && $('body').velocity('stop').velocity({paddingLeft: 0});
       this.sidebarEl.find('.motion-element').velocity('stop').css('display', 'none');
       this.sidebarEl.velocity('stop').velocity({width: 0}, {display: 'none'});
 
@@ -289,7 +291,7 @@ $(document).ready(function () {
     },
 
     postList: function (integrator) {
-      //var $post = $('.post');
+      var $post = $('.post');
       var $postBlock = $('.post-block, .pagination, .comments');
       var $postBlockTransition = CONFIG.motion.transition.post_block;
       var $postHeader = $('.post-header');
@@ -314,6 +316,7 @@ $(document).ready(function () {
             drag: true
           };
         postMotionOptions.complete = function () {
+          $post.animate({borderBottomWidth:"2px"});
           // After motion complete need to remove transform from sidebar to let affix work on Pisces | Gemini.
           if (CONFIG.motion.transition.sidebar && (NexT.utils.isPisces() || NexT.utils.isGemini())) {
             $sidebarAffix.css({ 'transform': 'initial' });

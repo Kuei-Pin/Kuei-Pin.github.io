@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,6 +13,13 @@
 <meta name="theme-color" content="#222">
 
 
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -68,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="xuguibin, ios" />
 
 
 
@@ -97,9 +104,9 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Mist',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -170,7 +177,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description"></h1>
       
   </div>
 
@@ -200,32 +207,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-schedule">
-          <a href="/schedule/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
-            
-            日程表
           </a>
         </li>
       
@@ -237,7 +224,16 @@
   
 </nav>
 
-
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
 
  </div>
     </header>
@@ -267,7 +263,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许桂斌">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -279,7 +275,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">异步读写文件NSStream</h1>
+          <h2 class="post-title" itemprop="name headline">异步读写文件NSStream</h2>
         
 
         <div class="post-meta">
@@ -344,7 +340,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  367
+                  370
                 </span>
               
 
@@ -370,11 +366,11 @@
 
       
         <p>NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。<br><a id="more"></a></p>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>当我们从硬盘中读取文件到内存时，一般更多的是通过<code>NSData</code>来读取。在读取小文件时，直接使用NSData不会有什么影响，但是如果读取的文件大小比较大时，使用<code>NSData</code>直接读取文件，可能会阻塞当前进程，测试代码如下：<br><strong>NSData同步读取文件</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfFile:filePath];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\ndata length: %ld"</span>, data.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>输出</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">开始时间 ： <span class="number">1525486526.82</span></span><br><span class="line">结束时间 ： <span class="number">1525486530.22</span></span><br><span class="line">data length: <span class="number">212303699</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>当我们从硬盘中读取文件到内存时，一般更多的是通过<code>NSData</code>来读取。在读取小文件时，直接使用NSData不会有什么影响，但是如果读取的文件大小比较大时，使用<code>NSData</code>直接读取文件，可能会阻塞当前进程，测试代码如下：<br><strong>NSData同步读取文件</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></div><div class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfFile:filePath];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\ndata length: %ld"</span>, data.length);</div><div class="line">&#125;</div></pre></div></div></figure></p>
+<p><strong>输出</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></div><div class="code"><pre><div class="line">开始时间 ： <span class="number">1525486526.82</span></div><div class="line">结束时间 ： <span class="number">1525486530.22</span></div><div class="line">data length: <span class="number">212303699</span></div></pre></div></div></figure></p>
 <p>在模拟器上读取200M的文件需要花费大概3秒的时间。</p>
-<p><strong>NSStream异步读取</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">    <span class="keyword">self</span>.inputStream = [[<span class="built_in">NSInputStream</span> alloc] initWithFileAtPath:filePath];</span><br><span class="line">    [<span class="keyword">self</span>.inputStream scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop]</span><br><span class="line">                       forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line">    [<span class="keyword">self</span>.inputStream open];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>输出</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">开始时间 ： <span class="number">1525486717.64</span></span><br><span class="line">结束时间 ： <span class="number">1525486717.64</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>NSStream异步读取</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></div><div class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">    <span class="keyword">self</span>.inputStream = [[<span class="built_in">NSInputStream</span> alloc] initWithFileAtPath:filePath];</div><div class="line">    [<span class="keyword">self</span>.inputStream scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop]</div><div class="line">                       forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</div><div class="line">    [<span class="keyword">self</span>.inputStream open];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">&#125;</div></pre></div></div></figure></p>
+<p><strong>输出</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></div><div class="code"><pre><div class="line">开始时间 ： <span class="number">1525486717.64</span></div><div class="line">结束时间 ： <span class="number">1525486717.64</span></div></pre></div></div></figure></p>
 <p>必须使用代理，否则并不会进行读取。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html</a><br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1</a></p>
 
@@ -386,9 +382,7 @@
 
     
 
-    
-
-    
+     
       <div>
         <ul class="post-copyright">
   <li class="post-copyright-author">
@@ -397,15 +391,20 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://kuei-pin.github.io/2018/05/05/NSStream/" title="异步读写文件NSStream">https://kuei-pin.github.io/2018/05/05/NSStream/</a>
+      <a href="https://https://kuei-pin.github.io/2018/05/05/NSStream/" title="异步读写文件NSStream">https://https://kuei-pin.github.io/2018/05/05/NSStream/</a>
   </li>
   <li class="post-copyright-license">
     <strong>温馨提示： </strong>
-    由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。
+    <span class="tip">由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。</span>
   </li>
 </ul>
 
       </div>
+    
+
+
+    
+
     
 
     <footer class="post-footer">
@@ -440,6 +439,9 @@
   
   
   
+    
+
+
   </article>
 
 
@@ -487,64 +489,70 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          <li class="sidebar-nav-overview" data-target="site-overview">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">许桂斌</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
 
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">分类</span>
-                
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
+            <canvas id='sidebar-author'></canvas>
+            <a href="/"  class="site-author-image" rel="start" style="border: none;" title="许桂斌">
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="许桂斌" />
+            </a>
+            <p class="site-author-name" itemprop="name">许桂斌</p>
+            <p class="site-description motion-element" itemprop="description"></p>
         </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <!-- <a href="/archives/ || archive"> -->
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories"> 
+              <!--  -->
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              <!--  -->
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <div id="sidebarClock" class="customFlipClock" style="height: 46px;width: 100%; ">TwentyFourHourClock</div>
+
+
       </section>
 
       
@@ -591,11 +599,7 @@
 
 
 
-  <span class="post-meta-divider">|</span>
 
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -688,6 +692,8 @@
 
   <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
+  <script type="text/javascript" src="/js/src/function.js?v=5.1.4"></script>
+
   <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
@@ -695,11 +701,8 @@
   
   
 
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
   
@@ -715,6 +718,21 @@
 
 
 
+  <script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/lib/flipclock/flipclock.min.js"></script>	
+<script type="text/javascript" src="/js/src/customeFlipClock.js"></script>	
+<script type="text/javascript" src="/js/src/codescrollbar.js"></script>	
+<script type="text/javascript" src="/lib/tag3dCloud/tag3dCloud.min.js"> </script>
+<script type="text/javascript" src="/lib/wobblewindow/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>	
+<script >
+	$(document).ready(
+	function()
+		{			
+			
+		}
+	);	
+</script>
   
 
 
@@ -903,6 +921,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
   
