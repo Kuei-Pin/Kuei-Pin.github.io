@@ -3478,9 +3478,8 @@ p+figure {
   margin-top: 0 !important;
 }
 code {
-  color: #111;
-  background: #fff;
-  border: 1px solid #bbb;
+  color: #c7254e;
+  background: #f6f6f6;
   padding: 0.1em 0.4em;
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   font-size: 0.96em;
