@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="许桂斌的博客">
 <meta property="og:description" content="NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T07:32:39.000Z">
+<meta property="og:updated_time" content="2018-05-24T02:24:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异步读写文件NSStream">
 <meta name="twitter:description" content="NSStream是一种异步读写文件的技术，当你需要从硬盘或者Socket链接中将以字节流的形式读取数据，或者将文件以字节形式写入硬盘或者以Socket形式发送给远程服务器时，可以使用。">
@@ -298,6 +298,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cocoa/" itemprop="url" rel="index">
+                    <span itemprop="name">Cocoa</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -340,7 +362,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  370
+                  374
                 </span>
               
 
@@ -372,7 +394,7 @@
 <p><strong>NSStream异步读取</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></div><div class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="built_in">NSString</span> *filePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"一个大文件"</span> ofType:<span class="string">@"mp4"</span>];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n开始时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">    <span class="keyword">self</span>.inputStream = [[<span class="built_in">NSInputStream</span> alloc] initWithFileAtPath:filePath];</div><div class="line">    [<span class="keyword">self</span>.inputStream scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> currentRunLoop]</div><div class="line">                       forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</div><div class="line">    [<span class="keyword">self</span>.inputStream open];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"\n结束时间 ： %.2f"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSince1970]);</div><div class="line">&#125;</div></pre></div></div></figure></p>
 <p><strong>输出</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></div><div class="code"><pre><div class="line">开始时间 ： <span class="number">1525486717.64</span></div><div class="line">结束时间 ： <span class="number">1525486717.64</span></div></pre></div></div></figure></p>
 <p>必须使用代理，否则并不会进行读取。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html</a><br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1</a></p>
+<h1 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/TechniquesforReadingandWritingCustomFiles/TechniquesforReadingandWritingCustomFiles.html</a><br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Streams/Streams.html#//apple_ref/doc/uid/10000188-SW1</a></p>
 
       
     </div>
@@ -391,7 +413,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-      <a href="https://https://xxxxxxgb.github.io/2018/05/05/NSStream/" title="异步读写文件NSStream">https://https://xxxxxxgb.github.io/2018/05/05/NSStream/</a>
+      <a href="https://xxxxxxgb.github.io/2018/05/05/NSStream/" title="异步读写文件NSStream">https://xxxxxxgb.github.io/2018/05/05/NSStream/</a>
   </li>
   <li class="post-copyright-license">
     <strong>温馨提示： </strong>
@@ -427,6 +449,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/19/FBKVOController/" rel="prev" title="读一读KVOController">
+                读一读KVOController <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -517,7 +543,7 @@
             <div class="site-state-item site-state-posts">
               <!-- <a href="/archives/ || archive"> -->
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -527,7 +553,7 @@
             <div class="site-state-item site-state-categories"> 
               <!--  -->
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               <!--  -->
               </a>
@@ -565,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#未完待续…"><span class="nav-number">2.</span> <span class="nav-text">未完待续…</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
