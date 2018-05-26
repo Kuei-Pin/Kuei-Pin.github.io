@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="xuguibin, ios" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SDWebImage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读一读SDWebImage4">
+<meta property="og:url" content="https://xxxxxxgb.github.io/2018/05/26/SDWebImage/index.html">
+<meta property="og:site_name" content="许桂斌的博客">
+<meta property="og:description" content="SDWebImage">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-26T02:01:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读一读SDWebImage4">
+<meta name="twitter:description" content="SDWebImage">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xxxxxxgb.github.io/2018/05/26/SDWebImage/"/>
+
+
+
+
+
+  <title>读一读SDWebImage4 | 许桂斌的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b728f881bd233f20a31842facda5c201";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">许桂斌的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xxxxxxgb.github.io/2018/05/26/SDWebImage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="许桂斌">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="许桂斌的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">读一读SDWebImage4</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-26T09:21:11Z">
+                2018-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码/" itemprop="url" rel="index">
+                    <span itemprop="name">源码</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/26/SDWebImage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/05/26/SDWebImage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/26/SDWebImage/" class="leancloud_visitors" data-flag-title="读一读SDWebImage4">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  897
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SDWebImage<br><a id="more"></a></p>
+<h1 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h1><h2 id="SDWebImageFrame"><a href="#SDWebImageFrame" class="headerlink" title="SDWebImageFrame"></a>SDWebImageFrame</h2><p>相当于一个Model类，对动态图片的每一帧图片进行封装。具体结构如下：<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></div><div class="code"><pre><div class="line"><span class="comment">// SDWebImageFrame.h</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SDWebImageFrame</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="comment">/** 当前帧的图片 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">readonly</span>, <span class="keyword">nonnull</span>) <span class="built_in">UIImage</span> *image;</div><div class="line"><span class="comment">/** 当前帧图片持续的时间，单位秒，而不是毫秒，不能设置为0。 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">assign</span>) <span class="built_in">NSTimeInterval</span> duration;</div><div class="line"></div><div class="line"><span class="comment">/** 工厂方法 */</span></div><div class="line">+ (<span class="keyword">instancetype</span> _Nonnull)frameWithImage:(<span class="built_in">UIImage</span> * _Nonnull)image duration:(<span class="built_in">NSTimeInterval</span>)duration;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">// SDWebImageFrame.m</span></div><div class="line"><span class="comment">// 将readonly改为readwrite类型，并实现工厂方法</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SDWebImageFrame</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">readwrite</span>, <span class="keyword">nonnull</span>) <span class="built_in">UIImage</span> *image;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">assign</span>) <span class="built_in">NSTimeInterval</span> duration;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SDWebImageFrame</span></span></div><div class="line">+ (<span class="keyword">instancetype</span>)frameWithImage:(<span class="built_in">UIImage</span> *)image duration:(<span class="built_in">NSTimeInterval</span>)duration &#123;</div><div class="line">    SDWebImageFrame *frame = [[SDWebImageFrame alloc] init];</div><div class="line">    frame.image = image;</div><div class="line">    frame.duration = duration;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> frame;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></div></div></figure></p>
+<h2 id="SDWebImageCoderHelper"><a href="#SDWebImageCoderHelper" class="headerlink" title="SDWebImageCoderHelper"></a>SDWebImageCoderHelper</h2><p>一个助手类，总共提供了四种复制方法<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></div><div class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    这方法是给动态图片打上补丁。这个补丁是因为直接使用+[UIImage animatedImageWithImages:duration:]会将每帧动画持续总时间的平均时长。</span></div><div class="line"><span class="comment">    因此当不同帧图片要持续的时间不是相同时，就不能完美地呈现。所以我们需要给特定的每帧图片赋予特定的持续时间。</span></div><div class="line"><span class="comment">*/</span></div><div class="line">+ (<span class="built_in">UIImage</span> * _Nullable)animatedImageWithFrames:(<span class="built_in">NSArray</span>&lt;SDWebImageFrame *&gt; * _Nullable)frames;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    这方法将取消上面描述的补丁并且创建一个帧数组。这方法同样适用于普通的动态图片。</span></div><div class="line"><span class="comment">*/</span></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;SDWebImageFrame *&gt; * _Nullable)framesFromAnimatedImage:(<span class="built_in">UIImage</span> * _Nullable)animatedImage;</div><div class="line"></div><div class="line"><span class="comment">/** 将一个EXIF图片方向转化成iOS系统方向。 */</span></div><div class="line">+ (<span class="built_in">UIImageOrientation</span>)imageOrientationFromEXIFOrientation:(<span class="built_in">NSInteger</span>)exifOrientation;</div><div class="line"></div><div class="line"><span class="comment">/** 将一个iOS系统方向转化成EXIF图片方向。 */</span></div><div class="line">+ (<span class="built_in">NSInteger</span>)exifOrientationFromImageOrientation:(<span class="built_in">UIImageOrientation</span>)imageOrientation;</div></pre></div></div></figure></p>
+<p>这四个方法的实现分别如下:<br><strong>+animatedImageWithFrames:</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></div><div class="code"><pre><div class="line">+ (<span class="built_in">UIImage</span> *)animatedImageWithFrames:(<span class="built_in">NSArray</span>&lt;SDWebImageFrame *&gt; *)frames &#123;</div><div class="line">    <span class="built_in">NSUInteger</span> frameCount = frames.count;</div><div class="line">    <span class="keyword">if</span> (frameCount == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">UIImage</span> *animatedImage;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> durations[frameCount];</div><div class="line">    <span class="keyword">for</span> (size_t i = <span class="number">0</span>; i &lt; frameCount; i++) &#123;</div><div class="line">        durations[i] = frames[i].duration * <span class="number">1000</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 求数组中所有值的最大公约数</span></div><div class="line">    <span class="built_in">NSUInteger</span> <span class="keyword">const</span> gcd = gcdArray(frameCount, durations);</div><div class="line">    __block <span class="built_in">NSUInteger</span> totalDuration = <span class="number">0</span>;</div><div class="line">    <span class="built_in">NSMutableArray</span>&lt;<span class="built_in">UIImage</span> *&gt; *animatedImages = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:frameCount];</div><div class="line">    [frames enumerateObjectsUsingBlock:^(SDWebImageFrame * _Nonnull frame, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        <span class="built_in">UIImage</span> *image = frame.image;</div><div class="line">        <span class="built_in">NSUInteger</span> duration = frame.duration * <span class="number">1000</span>;</div><div class="line">        totalDuration += duration;</div><div class="line">        <span class="built_in">NSUInteger</span> repeatCount;</div><div class="line">        <span class="keyword">if</span> (gcd) &#123;</div><div class="line">            repeatCount = duration / gcd;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            repeatCount = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (size_t i = <span class="number">0</span>; i &lt; repeatCount; ++i) &#123;</div><div class="line">            [animatedImages addObject:image];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    animatedImage = [<span class="built_in">UIImage</span> animatedImageWithImages:animatedImages duration:totalDuration / <span class="number">1000.</span>f];</div><div class="line">    <span class="keyword">return</span> animatedImage;</div><div class="line">&#125;</div></pre></div></div></figure></p>
+<p>上面代码的关键部分是通过求所有帧动画持续时间的最大公约数，再由持续时间/最大公约数求出对相同的图片重复添加的次数。（例如，A图片持续0.6秒，B图片持续0.8秒，它们最大公约数为200毫秒，那么A图片重复添加次数为3，B图片为4，图片数组为[A,A,A,B,B,B,B]。因为总持续时间1.4秒，那么使用<code>+[UIImage animatedImageWithImages:duration:]</code>方法平均后每张图片持续0.2秒，这样就实现了A图片持续0.6秒，B图片持续0.8秒的效果。）此外，<a href="https://blog.csdn.net/linj_m/article/details/19167147" target="_blank" rel="noopener">求最大公约数的方法</a>如下：<br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></div><div class="code"><pre><div class="line"><span class="keyword">static</span> <span class="built_in">NSUInteger</span> gcd(<span class="built_in">NSUInteger</span> a, <span class="built_in">NSUInteger</span> b) &#123;</div><div class="line">    <span class="built_in">NSUInteger</span> c;</div><div class="line">    <span class="keyword">while</span> (a != <span class="number">0</span>) &#123;</div><div class="line">        c = a;</div><div class="line">        a = b % a;</div><div class="line">        b = c;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> b;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="built_in">NSUInteger</span> gcdArray(size_t <span class="keyword">const</span> count, <span class="built_in">NSUInteger</span> <span class="keyword">const</span> * <span class="keyword">const</span> values) &#123;</div><div class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSUInteger</span> result = values[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (size_t i = <span class="number">1</span>; i &lt; count; ++i) &#123;</div><div class="line">        result = gcd(values[i], result);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></div></div></figure></p>
+<p><strong>+framesFromAnimatedImage:</strong><br><figure class="highlight objc"><div class="figcode"><div class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></div><div class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;SDWebImageFrame *&gt; *)framesFromAnimatedImage:(<span class="built_in">UIImage</span> *)animatedImage &#123;</div><div class="line">    <span class="keyword">if</span> (!animatedImage) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSMutableArray</span>&lt;SDWebImageFrame *&gt; *frames = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    <span class="built_in">NSUInteger</span> frameCount = <span class="number">0</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span>&lt;<span class="built_in">UIImage</span> *&gt; *animatedImages = animatedImage.images;</div><div class="line">    frameCount = animatedImages.count;</div><div class="line">    <span class="keyword">if</span> (frameCount == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSTimeInterval</span> avgDuration = animatedImage.duration / frameCount;</div><div class="line">    <span class="keyword">if</span> (avgDuration == <span class="number">0</span>) &#123;</div><div class="line">        avgDuration = <span class="number">0.1</span>; <span class="comment">// 如果只有图片没有持续时间，那么持续时间默认100ms。 (这不像GIF或者WebP有10ms限制，它允许码农自己定义限制时长。)</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    __block <span class="built_in">NSUInteger</span> index = <span class="number">0</span>;</div><div class="line">    __block <span class="built_in">NSUInteger</span> repeatCount = <span class="number">1</span>;</div><div class="line">    __block <span class="built_in">UIImage</span> *previousImage = animatedImages.firstObject;</div><div class="line">    [animatedImages enumerateObjectsUsingBlock:^(<span class="built_in">UIImage</span> * _Nonnull image, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        <span class="keyword">if</span> (idx == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ([image isEqual:previousImage]) &#123;</div><div class="line">            repeatCount++;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            SDWebImageFrame *frame = [SDWebImageFrame frameWithImage:previousImage duration:avgDuration * repeatCount];</div><div class="line">            [frames addObject:frame];</div><div class="line">            repeatCount = <span class="number">1</span>;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">        previousImage = image;</div><div class="line">        <span class="keyword">if</span> (idx == frameCount - <span class="number">1</span>) &#123;</div><div class="line">            SDWebImageFrame *frame = [SDWebImageFrame frameWithImage:previousImage duration:avgDuration * repeatCount];</div><div class="line">            [frames addObject:frame];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">    <span class="keyword">return</span> frames;</div><div class="line">&#125;</div></pre></div></div></figure></p>
+<p>这方法差不多是上面方法的逆过程，通过修改duration将相同图片的帧封装到同一个<code>SDWebImageFrame</code>中。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://github.com/facebook/KVOController" target="_blank" rel="noopener">https://github.com/facebook/KVOController</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    许桂斌
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+      <a href="https://xxxxxxgb.github.io/2018/05/26/SDWebImage/" title="读一读SDWebImage4">https://xxxxxxgb.github.io/2018/05/26/SDWebImage/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>温馨提示： </strong>
+    <span class="tip">由于是原创文章，可能会有更新以及修正一些错误，因此转载请保留原出处，方便溯源，避免陈旧错误知识的误导，同时有更好的阅读体验。</span>
+  </li>
+</ul>
+
+      </div>
+    
+
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/19/FBKVOController/" rel="next" title="读一读KVOController">
+                <i class="fa fa-chevron-left"></i> 读一读KVOController
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+    
+
+
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+
+            <canvas id='sidebar-author'></canvas>
+            <a href="/"  class="site-author-image" rel="start" style="border: none;" title="许桂斌">
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="许桂斌" />
+            </a>
+            <p class="site-author-name" itemprop="name">许桂斌</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <!-- <a href="/archives/ || archive"> -->
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories"> 
+              <!--  -->
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              <!--  -->
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <div id="sidebarClock" class="customFlipClock" style="height: 46px;width: 100%; ">TwentyFourHourClock</div>
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Decoder"><span class="nav-number">1.</span> <span class="nav-text">Decoder</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SDWebImageFrame"><span class="nav-number">1.1.</span> <span class="nav-text">SDWebImageFrame</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDWebImageCoderHelper"><span class="nav-number">1.2.</span> <span class="nav-text">SDWebImageCoderHelper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">许桂斌</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/function.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  <script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/lib/flipclock/flipclock.min.js"></script>	
+<script type="text/javascript" src="/js/src/customeFlipClock.js"></script>	
+<script type="text/javascript" src="/js/src/codescrollbar.js"></script>	
+<script type="text/javascript" src="/lib/tag3dCloud/tag3dCloud.min.js"> </script>
+<script type="text/javascript" src="/lib/wobblewindow/wobblewindow.js"> </script>
+<script type="text/javascript" src="/js/src/custom.js"></script>	
+<script >
+	$(document).ready(
+	function()
+		{			
+			
+		}
+	);	
+</script>
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'xxxxxxgb',
+            repo: 'https://github.com/xxxxxxgb/blog-comments.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e8c9abc6901b421808690eb1e3572708f8fd52c',
+            
+                client_id: 'ba95ef24632c5a4a4b28'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("bnMLGOPH5HrwgvHK4lHFkCWu-gzGzoHsz", "hrQYBbz0uQ7OsHaW4B1unQbv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
